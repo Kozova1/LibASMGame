@@ -3,15 +3,22 @@
 void Cpu::init() {
 	this->i = 0;
 	this->sp = 0;
-	this->pc = 512;
+	this->pc = 511;
 }
 
 void Cpu::load_program(uint8_t *program) {
-	memcpy(this->memory + 512, program, 4096 - 512 - 256);
+	memcpy(this->memory + 511, program, 4096 - 512 - 256);
 }
 
 void Cpu::run() {
-	this->process_instruction(this->read_word(this->pc));
+	uint16_t end = 512;
+	for (int i = end; i < MEM_SIZE; i++) {
+		if (this->memory[i] == 0xFF && this->memory[i+1] == 0xFF) end = i;
+	}
+	while (this->memory[this->pc] < 0xff && this->memory[this->pc + 1] < 0xff) {
+		this->pc += 2;
+		this->process_instruction(this->read_word(this->pc));
+	}
 }
 
 uint16_t Cpu::read_word(size_t pos) {
@@ -95,4 +102,4 @@ void Cpu::process_instruction(uint16_t ocode) {
 }
 
 void Cpu::putchar(char c) {}
-char Cpu::getchar() { return 'c'; /* Do not use this, override plz */}
+uint8_t Cpu::getchar() { return (uint8_t)'c'; /* Do not use this, override plz */}

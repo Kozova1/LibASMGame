@@ -20,7 +20,7 @@ class Cpu {
 	void load_program(uint8_t*);
 	void run();
 	virtual void putchar(char);
-	virtual char getchar();
+	virtual uint8_t getchar();
 	private:
 	uint16_t read_word(size_t);
 	void process_instruction(uint16_t);

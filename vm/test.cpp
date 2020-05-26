@@ -7,17 +7,17 @@ class MyCpu : public Cpu {
 	public:
 	MyCpu();
 	virtual void putchar(char) override;
-	virtual char getchar() override;
+	virtual uint8_t getchar() override;
 };
 
 void MyCpu::putchar(char c) {
 	std::cout << c;
 }
 
-char MyCpu::getchar() {
+uint8_t MyCpu::getchar() {
 	char c;
 	std::cin >> c;
-	return c;
+	return (uint8_t) c;
 }
 
 MyCpu::MyCpu() : Cpu() {
@@ -37,6 +37,7 @@ int main() {
 	mcp.init();
 	mcp.load_program(buf);
 	mcp.run();
+	std::cout << '\n';
 
 	return 0;
 }

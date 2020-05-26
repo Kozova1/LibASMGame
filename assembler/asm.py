@@ -10,26 +10,29 @@ def get_lines(file_name: str) -> List[str]:
 
 def preprocess(lines: List[str]) -> List[str]:
     new_lines: List[str] = []
-    positions: Dict[str, int] = []
+    positions: Dict[str, int] = {}
     for line in lines:
         new_lines.append(line.strip())
     for i, l in enumerate(new_lines):
         if l[0] == '#':
             positions[l[1:]] = i
+            new_lines.pop(i)
         if l[0] == '':
             new_lines.pop(i)
+    for i, l in enumerate(new_lines):
         if 'call' in l:
-            l = 'call ' + positions[l[6:]]
+            new_lines[i] = 'call ' + str(positions[l[5:]])
         elif 'jmp' in l:
-            l = 'jmp ' + positions[l[5:]]
+            new_lines[i] = 'jmp ' + str(positions[l[4:]])
         elif 'biz' in l:
-            l = 'biz ' + positions[l[5:]]
+            new_lines[i] = 'biz ' + str(positions[l[4:]])
     return new_lines
 
 def assemble(lines: List[str]) -> str:
     end_result: str = ''
     for i, line in enumerate(lines):
         inst, *args = line.split()
+        print(f'{i}: {inst}')
         args = ''.join(args).split(',')
         if inst == 'ret':
             end_result += '1000'
