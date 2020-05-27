@@ -3,7 +3,7 @@
 void Cpu::init() {
 	this->i = 0;
 	this->sp = 0;
-	this->pc = 511;
+	this->pc = 511 - 2;
 }
 
 void Cpu::load_program(uint8_t *program) {
@@ -11,10 +11,6 @@ void Cpu::load_program(uint8_t *program) {
 }
 
 void Cpu::run() {
-	uint16_t end = 512;
-	for (int i = end; i < MEM_SIZE; i++) {
-		if (this->memory[i] == 0xFF && this->memory[i+1] == 0xFF) end = i;
-	}
 	while (this->memory[this->pc] < 0xff && this->memory[this->pc + 1] < 0xff) {
 		this->pc += 2;
 		this->process_instruction(this->read_word(this->pc));

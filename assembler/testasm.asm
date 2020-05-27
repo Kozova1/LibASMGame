@@ -1,10 +1,8 @@
-getc r0
-ld r1, 1
-#loop
-sub r0, r1
-putc r0
-ld rf, 030
-subr rf, r0
-biz brk
-jmp loop
-#brk
+; comment
+ld r3, 3e
+putc r3
+getc r3
+ld r4, 21
+add r3, r4
+putc r3
+putc r4

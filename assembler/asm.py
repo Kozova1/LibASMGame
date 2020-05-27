@@ -17,7 +17,7 @@ def preprocess(lines: List[str]) -> List[str]:
         if l[0] == '#':
             positions[l[1:]] = i
             new_lines.pop(i)
-        if l[0] == '':
+        if l[0] == ';':
             new_lines.pop(i)
     for i, l in enumerate(new_lines):
         if 'call' in l:
